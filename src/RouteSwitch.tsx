@@ -3,6 +3,7 @@ import App from "./App";
 import {useState} from 'react';
 import Checkout from "./Checkout";
 import { Course } from "./interfaces";
+import React from 'react';
 
 const RouteSwitch = () => {
 
