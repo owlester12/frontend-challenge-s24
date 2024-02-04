@@ -23,12 +23,9 @@ const Courses = () => {
   const result = fuse.search<Course>(theSearch);
   const rest: Course[]= result.map((item) => (item.item))
   //filters courses according to filters and search input
-  const filtCourse = result.filter(function(entrys){
-    const entry:Course = entrys.item
 
-
-
-    return ((filter[0]&& entry.number >= 100 && entry.number < 200 )
+  const filts = (entry: Course) => {
+    return ((filter[0] && entry.number >= 100 && entry.number < 200 )
     || (filter[1] && entry.number >= 200 && entry.number <300)
     || (filter[2] && entry.number >= 300 && entry.number < 400) 
     || (filter[3] && entry.number >= 400 && entry.number < 500)
@@ -50,7 +47,20 @@ const Courses = () => {
 
       )));
 
+  }
+
+
+
+  const filtCourse = result.filter(function(entrys){
+    const entry:Course = entrys.item
+    return filts(entry);
   })
+
+  const noSearch = courses_data.filter((entry) => {
+    return filts(entry);
+})
+
+
 
   return (
   <div className = "ml-[10px] ">
@@ -61,7 +71,7 @@ const Courses = () => {
       <TheCourse key = {value.item.number} course = {value.item} />
       
     ))}
-    {(theSearch === "" || theSearch === " ") && courses.map((value) => (
+    {(theSearch === "" || theSearch === " ") && noSearch.map((value) => (
       <TheCourse   key = {value.number} course = {value} />
     ))
     }
